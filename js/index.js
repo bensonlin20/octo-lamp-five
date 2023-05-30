@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
     {
       q: 'Which is the third planet from the sun?',
       o: ['Saturn', 'Earth', 'Pluto', 'Mars'],
-      a: 1, // array index 1 - so Earth is the correct answer here
+      a: 1, 
     },
     {
       q: 'Which is the largest ocean on Earth?',
@@ -98,12 +98,36 @@ window.addEventListener('DOMContentLoaded', () => {
       }
       
     });
-    alert(`Your score is ${score} out of 5.`);  //alert the result 
+    // alert(`Your score is ${score} out of 5.`);  //alert the result 
+    document.getElementById('score').innerHTML = 'Score is:' + score;
     document.getElementById('btnSubmit').disabled = 'true';   //prevent continue click, 
   };
 
-  document.getElementById('btnSubmit').addEventListener('click',calculateScore);
-  
+
+      function countDownTimer(){
+        let startingTime = 1;
+        let time = startingTime * 5;
+        const setTimer = document.getElementById('time');
+
+      setInterval(updateTimer,1000);
+
+      function updateTimer(){
+        let minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+          if(minutes == 0 && seconds == 0){
+            calculateScore();
+          }
+            else{
+              setTimer.innerHTML = `${minutes} : ${seconds}`;
+              time--;
+            }
+    }
+}
+
+  document.getElementById('btnSubmit').addEventListener('click',calculateScore); 
+
   // call the displayQuiz function
   displayQuiz();
+  countDownTimer();
+  
 });
