@@ -1,12 +1,10 @@
 
-
 window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
   });
-
 
   const quizArray = [
     {
@@ -36,7 +34,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-
   const displayQuiz = () => {
     const quizWrap = document.querySelector('#quizWrap');
     let quizDisplay = '';
@@ -54,16 +51,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
   };
 
-  // Calculate the score
   const calculateScore = () => {
     let score = 0;
+    clearInterval(timerId);
     quizArray.map((quizItem, index) => {
       for (let i = 0; i < 4; i++) {
         let li = `li_${index}_${i}`;
         let r = `radio_${index}_${i}`;
         liElement = document.querySelector('#' + li);
         radioElement = document.querySelector('#' + r);
-
+        radioElement.disabled = true;
         if (quizItem.a == i) {
           liElement.style.backgroundColor = 'lightblue';
         }
@@ -75,13 +72,12 @@ window.addEventListener('DOMContentLoaded', () => {
       }
       
     });
-
-    document.getElementById('score').innerHTML = 'Score is:' + score;
+    alert(`Finished! Your score is ${score} out of 5. \nPress F5 or click RESET to do it again`);
     document.getElementById('btnSubmit').disabled = 'true';   //prevent continue click, 
   };
 
 
-let timeleft = 5;
+let timeleft = 30;
 let timerId;
 const updateTimer = () => {
   const timer = document.getElementById('time');
@@ -96,13 +92,10 @@ timerId = setInterval(updateTimer, 1000);
 
 function endQuiz () {
   calculateScore();
-  
 }
 
-  document.getElementById('btnSubmit').addEventListener('click',calculateScore); 
+document.getElementById('btnSubmit').addEventListener('click',calculateScore); 
 
-  // call the displayQuiz function
-  displayQuiz();
-  
+displayQuiz();
   
 });
