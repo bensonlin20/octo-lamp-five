@@ -1,23 +1,4 @@
-/* ***************************
-  JWD JavaScript Assessment
 
-  This code is unfinished. You will need to study it to figure out what it does. Then you will need to use this and
-  your own code, to finish the app. 
-  
-  The tasks you need to do are below.
-
-    TASKS TODO:
-      1. Calculate the score as the total of the number of correct answers                                      ***done***
-
-      2. Add an Event listener for the submit button, which will display the score and highlight                ***done***
-         the correct answers when the button is clicked. Use the code from lines 67 to 86 to help you.   
-
-      3. Add 2 more questions to the app (each question must have 4 options).                                  ***done***
-
-      4. Reload the page when the reset button is clicked (hint: search window.location)                       ***done***
-
-      5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers
-*************************** */
 
 window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
@@ -25,9 +6,8 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
   });
-  // quizArray QUESTIONS & ANSWERS
-  // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
-  // Basic ideas from https://code-boxx.com/simple-javascript-quiz/
+
+
   const quizArray = [
     {
       q: 'Which is the third planet from the sun?',
@@ -56,7 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // function to Display the quiz questions and answers from the object
+
   const displayQuiz = () => {
     const quizWrap = document.querySelector('#quizWrap');
     let quizDisplay = '';
@@ -79,55 +59,50 @@ window.addEventListener('DOMContentLoaded', () => {
     let score = 0;
     quizArray.map((quizItem, index) => {
       for (let i = 0; i < 4; i++) {
-        //highlight the li if it is the correct answer
         let li = `li_${index}_${i}`;
         let r = `radio_${index}_${i}`;
         liElement = document.querySelector('#' + li);
         radioElement = document.querySelector('#' + r);
 
         if (quizItem.a == i) {
-          //change background color of li element here
           liElement.style.backgroundColor = 'lightblue';
         }
 
         if (radioElement.checked) {
-          // code for task 1 goes here
           if(quizItem.a == i)
           score++;
         }
       }
       
     });
-    // alert(`Your score is ${score} out of 5.`);  //alert the result 
+
     document.getElementById('score').innerHTML = 'Score is:' + score;
     document.getElementById('btnSubmit').disabled = 'true';   //prevent continue click, 
   };
 
 
-      function countDownTimer(){
-        let startingTime = 1;
-        let time = startingTime * 5;
-        const setTimer = document.getElementById('time');
+let timeleft = 5;
+let timerId;
+const updateTimer = () => {
+  const timer = document.getElementById('time');
+  timer.innerHTML = timeleft;
+  timeleft--;
+  if (timeleft < 0) {
+    endQuiz();
+  }
+}
 
-      setInterval(updateTimer,1000);
+timerId = setInterval(updateTimer, 1000);
 
-      function updateTimer(){
-        let minutes = Math.floor(time / 60);
-        let seconds = time % 60;
-          if(minutes == 0 && seconds == 0){
-            calculateScore();
-          }
-            else{
-              setTimer.innerHTML = `${minutes} : ${seconds}`;
-              time--;
-            }
-    }
+function endQuiz () {
+  calculateScore();
+  
 }
 
   document.getElementById('btnSubmit').addEventListener('click',calculateScore); 
 
   // call the displayQuiz function
   displayQuiz();
-  countDownTimer();
+  
   
 });
