@@ -7,14 +7,14 @@
   The tasks you need to do are below.
 
     TASKS TODO:
-      1. Calculate the score as the total of the number of correct answers
+      1. Calculate the score as the total of the number of correct answers                                      ***done***
 
-      2. Add an Event listener for the submit button, which will display the score and highlight 
-         the correct answers when the button is clicked. Use the code from lines 67 to 86 to help you.
+      2. Add an Event listener for the submit button, which will display the score and highlight                ***done***
+         the correct answers when the button is clicked. Use the code from lines 67 to 86 to help you.   
 
-      3. Add 2 more questions to the app (each question must have 4 options).
+      3. Add 2 more questions to the app (each question must have 4 options).                                  ***done***
 
-      4. Reload the page when the reset button is clicked (hint: search window.location)
+      4. Reload the page when the reset button is clicked (hint: search window.location)                       ***done***
 
       5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers
 *************************** */
@@ -44,6 +44,16 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'What is the official language in Singapore?',
+      o: ['German', 'English', 'French', 'Spanish'],
+      a: 1,
+    },
+    {
+      q: 'Where is Brazil?',
+      o: ['North America', 'Asia', 'Europe', 'South America'],
+      a: 3,
+    }
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -61,6 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     <div>&nbsp;</div>`;
       quizWrap.innerHTML = quizDisplay;
     });
+
   };
 
   // Calculate the score
@@ -76,15 +87,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.backgroundColor = 'lightblue';
         }
 
         if (radioElement.checked) {
           // code for task 1 goes here
+          if(quizItem.a == i)
+          score++;
         }
       }
+      
     });
+    alert(`Your score is ${score} out of 5.`);  //alert the result 
+    document.getElementById('btnSubmit').disabled = 'true';   //prevent continue click, 
   };
 
+  document.getElementById('btnSubmit').addEventListener('click',calculateScore);
+  
   // call the displayQuiz function
   displayQuiz();
 });
